@@ -1,0 +1,65 @@
+MODULE Receipt;
+
+REQUIRE Item, LegalEntity, Time, Authentication;
+
+CLASS Receipt 'Приходная накладная';
+CLASS ReceiptDetail 'Строка приходной накладной';
+
+receipt 'Документ строки' = DATA Receipt (ReceiptDetail) NONULL DELETE;
+
+index 'Номер строки' (ReceiptDetail d) =
+    PARTITION SUM 1 IF d IS ReceiptDetail
+        ORDER d BY receipt(d);
+
+number 'Номер накладной' = DATA BPSTRING[10] (Receipt) NONULL;
+date 'Дата накладной' = DATA DATE (Receipt) NONULL;
+
+supplier 'Поставщик' = DATA LegalEntity (Receipt) NONULL;
+nameSupplier 'Наименование поставщика' (Receipt r) = name(supplier(r)) NONULL;
+
+item 'Товар' = DATA Item (ReceiptDetail);
+nameItem 'Наименование товара' (ReceiptDetail d) = name(item(d));
+nameItemUnit 'Ед. изм.' (ReceiptDetail d) = nameUnit(item(d));
+
+quantity 'Количество' = DATA NUMERIC[16,4] (ReceiptDetail) NONULL;
+price 'Цена поставщика' = DATA NUMERIC[17,2] (ReceiptDetail) NONULL;
+sum 'Сумма поставщика' (ReceiptDetail d) = quantity(d) * price(d);
+
+// Вспомогательное свойство для суммы  
+totalSum 'Итоговая сумма' (Receipt r) = GROUP SUM sum(ReceiptDetail d) IF receipt(d) = r;
+
+FORM receipt 'Приходная накладная'
+    OBJECTS r = Receipt PANEL
+    PROPERTIES(r) number, date, nameSupplier//, nameStock
+
+    OBJECTS d = ReceiptDetail
+    PROPERTIES(d) index, nameItem, nameItemUnit, quantity, price, sum READONLY, NEW, DELETE GRID
+    FILTERS receipt(d) = r
+
+    EDIT Receipt OBJECT r
+;
+
+FORM receipts 'Приходные накладные'
+    OBJECTS r = Receipt
+    PROPERTIES(r) READONLY number, date, nameSupplier, totalSum//, nameStock
+    PROPERTIES(r) NEWSESSION NEW, EDIT, DELETE
+
+    OBJECTS d = ReceiptDetail
+    PROPERTIES(d) READONLY index, nameItem, nameItemUnit, quantity, price, sum
+    FILTERS receipt(d) = r
+;
+//дата, пользователь заполнения накладной
+userName 'Пользователь' = DATA STRING[50] (Receipt);
+userDate 'Дата ввода' = DATA DATE (Receipt);
+// автозаполнение
+WHEN SET (Receipt r IS Receipt) AND NOT userDate(r) DO userDate(r) <- currentDate();
+WHEN SET (Receipt r IS Receipt) AND NOT userName(r)
+    DO userName(r) <- STRING[50](currentUserName());
+
+EXTEND FORM receipts
+    PROPERTIES (r) READONLY userName, userDate
+;
+// новое: определяем уникальность документа
+unique = GROUP AGGR Receipt r BY number(r), date(r);
+// 3. Ограничение на количество едениц товара
+CONSTRAINT quantity(ReceiptDetail d) > 1000 OR quantity(d) <= 0 MESSAGE 'Недопустимое количество';

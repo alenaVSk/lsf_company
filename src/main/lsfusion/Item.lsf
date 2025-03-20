@@ -1,0 +1,14 @@
+MODULE Item;
+
+CLASS Item 'Товар';
+
+name 'Наименование' = DATA STRING[100](Item) IN base;
+barcode 'Штрихкод' = DATA BPSTRING[13](Item) IN base;
+nameUnit 'Ед. изм.' = DATA STRING[10](Item) IN base;
+
+salePrice 'Цена продажи' = DATA NUMERIC[17,2](Item) IN base;
+
+FORM items 'Товары'
+    OBJECTS i = Item
+    PROPERTIES(i) name, barcode, nameUnit, salePrice, NEW, DELETE
+;
