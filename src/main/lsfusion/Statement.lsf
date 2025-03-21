@@ -1,0 +1,60 @@
+MODULE Statement;
+
+REQUIRE Item, LegalEntity, Customer;
+
+CLASS Statement 'Акт выполненных работ';
+CLASS StatementDetail 'Строка акта выполненных работ';
+
+statement 'Документ строки' = DATA Statement (StatementDetail) NONULL DELETE;
+index 'Номер строки' (StatementDetail d) =
+    PARTITION SUM 1 IF d IS StatementDetail
+        ORDER d BY statement(d);
+
+number_actCustomer 'Номер акта вып. работ' = DATA STRING[5] (Statement);
+dateactCustomer 'Дата акта вып.работ' = DATA DATE (Statement);
+
+customer 'Заказчик' = DATA Customer (Statement);
+numberCustomer 'Заказ N' (Statement s) = numberN(customer(s));
+nameCustomer 'ФИО заказчика' (Statement s) = name(customer(s));
+
+autoCustomer 'Авто' (Statement s) = auto(customer(s));
+brandAutoCustomer 'Марка авто' (Statement s) = brandAuto(customer(s));
+modelAutoCustomer 'Марка авто' (Statement s) = modelAuto(customer(s));
+
+numberAutoCustomer 'Номер авто' (Statement s) = numberAuto(customer(s));
+seriesAutoCustomer 'Серия авто' (Statement s) = seriesAuto(customer(s));
+yearAutoCustomer 'Год авто' (Statement s) = yearAuto(customer(s));
+
+
+item 'Товар' = DATA Item (StatementDetail);
+nameItem 'Наименование товара' (StatementDetail d) = name(item(d));
+nameItemUnit 'Ед. изм.' (StatementDetail d) = nameUnit(item(d));
+
+quantity 'Количество' = DATA NUMERIC[16,4](StatementDetail);
+price 'Цена продажи' = DATA NUMERIC[17,2](StatementDetail);
+sum 'Сумма продажи' (StatementDetail d) = quantity(d) * price(d);
+
+price(StatementDetail d) <- salePrice(item(d)) WHEN CHANGED(item(d));
+
+FORM statement 'Акт выполненных работ'
+    OBJECTS s = Statement PANEL
+    PROPERTIES(s) numberCustomer, nameCustomer, brandAutoCustomer, seriesAutoCustomer, yearAutoCustomer, number_actCustomer, dateactCustomer
+
+    OBJECTS d = StatementDetail
+    PROPERTIES(d) nameItem, nameItemUnit, quantity, price, sum READONLY, NEW, DELETE GRID
+    FILTERS statement(d) = s
+
+    EDIT Statement OBJECT s
+;
+
+FORM statements 'Реестр актов выполненных работ'
+    OBJECTS s = Statement
+    PROPERTIES(s) READONLY number_actCustomer, dateactCustomer, nameCustomer, brandAutoCustomer, seriesAutoCustomer, yearAutoCustomer
+    PROPERTIES(s) NEWSESSION NEW, EDIT, DELETE
+
+    OBJECTS d = StatementDetail
+    PROPERTIES(d) READONLY nameItem, nameItemUnit, quantity, price, sum
+    FILTERS statement(d) = s
+;
+
+

@@ -1,9 +1,9 @@
 MODULE StockItem;
 
-REQUIRE Shipment, Receipt;
+REQUIRE Statement, Receipt;
 
 receivedQuantity 'Суммарный приход' = GROUP SUM quantity(ReceiptDetail d) BY item(d);
-shippedQuantity 'Суммарный расход' = GROUP SUM quantity(ShipmentDetail d) BY item(d);
+shippedQuantity 'Суммарный расход' = GROUP SUM quantity(StatementDetail d) BY item(d);
 currentBalance 'Текущий остаток' (Item i) = receivedQuantity (i) (-) shippedQuantity (i);
 
 CONSTRAINT currentBalance(Item i) < 0 MESSAGE 'Остаток по товару не может быть отрицательным';

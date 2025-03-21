@@ -30,7 +30,7 @@ totalSum 'Итоговая сумма' (Receipt r) = GROUP SUM sum(ReceiptDetail
 
 FORM receipt 'Приходная накладная'
     OBJECTS r = Receipt PANEL
-    PROPERTIES(r) number, date, nameSupplier//, nameStock
+    PROPERTIES(r) number, date, nameSupplier
 
     OBJECTS d = ReceiptDetail
     PROPERTIES(d) index, nameItem, nameItemUnit, quantity, price, sum READONLY, NEW, DELETE GRID
@@ -41,7 +41,7 @@ FORM receipt 'Приходная накладная'
 
 FORM receipts 'Приходные накладные'
     OBJECTS r = Receipt
-    PROPERTIES(r) READONLY number, date, nameSupplier, totalSum//, nameStock
+    PROPERTIES(r) READONLY number, date, nameSupplier, totalSum
     PROPERTIES(r) NEWSESSION NEW, EDIT, DELETE
 
     OBJECTS d = ReceiptDetail
@@ -62,4 +62,4 @@ EXTEND FORM receipts
 // новое: определяем уникальность документа
 unique = GROUP AGGR Receipt r BY number(r), date(r);
 // 3. Ограничение на количество едениц товара
-CONSTRAINT quantity(ReceiptDetail d) > 1000 OR quantity(d) <= 0 MESSAGE 'Недопустимое количество';
+CONSTRAINT quantity(ReceiptDetail d) > 500 OR quantity(d) <= 0 MESSAGE 'Недопустимое количество';

@@ -1,0 +1,36 @@
+MODULE Customer;
+
+//REQUIRE Statement;
+
+CLASS Auto 'Авто';
+
+brand 'Марка авто' = DATA STRING[13] (Auto) IN base NONULL;
+model 'Модель авто' = DATA STRING[10] (Auto) IN base;
+
+CLASS Customer 'Журнал заказов';
+
+numberN 'Заказ N' = DATA STRING[5] (Customer) NONULL;
+date 'Дата обращения' = DATA DATE (Customer) NONULL;
+name 'ФИО заказчика' = DATA STRING[80] (Customer) IN base NONULL;
+
+auto 'Авто' = DATA Auto (Customer);
+brandAuto 'Марка авто' (Customer c) = brand(auto(c));
+modelAuto 'Марка авто' (Customer c) = model(auto(c));
+
+numberAuto 'Номер авто' = DATA STRING[5] (Customer) IN base NONULL;
+seriesAuto 'Серия авто' = DATA STRING[6] (Customer) IN base NONULL;
+yearAuto 'Год авто' = DATA YEAR (Customer) IN base NONULL;
+reason 'Причина обращения' = DATA STRING[100] (Customer) IN base NONULL;
+
+
+number_act 'Номер акта вып. работ' = DATA STRING[5] (Customer);
+
+FORM auto 'Авто'
+    OBJECTS a = Auto
+    PROPERTIES(a) brand, model, NEW, DELETE
+;
+
+FORM customers 'Журнал заказов'
+    OBJECTS c = Customer
+    PROPERTIES(c) numberN, date, name, brandAuto, modelAuto, numberAuto, seriesAuto, yearAuto, reason, number_act, NEW, DELETE
+;
