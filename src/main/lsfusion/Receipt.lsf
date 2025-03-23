@@ -34,7 +34,7 @@ FORM receipt 'Приходная накладная'
 
     OBJECTS d = ReceiptDetail
     PROPERTIES(d) index, nameItem, nameItemUnit, quantity, price, sum READONLY, NEW, DELETE GRID
-    FILTERS receipt(d) = r
+    FILTERS receipt(d) = r  // указываем, что должны показываться только строки, относящиеся к данному заказу
 
     EDIT Receipt OBJECT r
 ;

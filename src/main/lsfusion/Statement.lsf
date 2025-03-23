@@ -1,14 +1,20 @@
 MODULE Statement;
 
-REQUIRE Item, LegalEntity, Customer;
+REQUIRE Item, LegalEntity, Customer, Employees;
 
 CLASS Statement 'Акт выполненных работ';
-CLASS StatementDetail 'Строка акта выполненных работ';
+CLASS StatementDetail 'Использованные материалы';
+CLASS StatementDetailWork 'Выполненные работы';
 
-statement 'Документ строки' = DATA Statement (StatementDetail) NONULL DELETE;
+statementDetail 'Документ строки' = DATA Statement (StatementDetail) NONULL DELETE;
 index 'Номер строки' (StatementDetail d) =
     PARTITION SUM 1 IF d IS StatementDetail
-        ORDER d BY statement(d);
+        ORDER d BY statementDetail(d);
+
+statementWork 'Документ строки' = DATA Statement (StatementDetailWork) NONULL DELETE;
+index 'Номер строки' (StatementDetailWork w) =
+    PARTITION SUM 1 IF w IS StatementDetailWork
+        ORDER w BY statementWork(w);
 
 number_actCustomer 'Номер акта вып. работ' = DATA STRING[5] (Statement);
 dateactCustomer 'Дата акта вып.работ' = DATA DATE (Statement);
@@ -19,42 +25,54 @@ nameCustomer 'ФИО заказчика' (Statement s) = name(customer(s));
 
 autoCustomer 'Авто' (Statement s) = auto(customer(s));
 brandAutoCustomer 'Марка авто' (Statement s) = brandAuto(customer(s));
-modelAutoCustomer 'Марка авто' (Statement s) = modelAuto(customer(s));
-
+modelAutoCustomer 'Модель авто' (Statement s) = modelAuto(customer(s));
 numberAutoCustomer 'Номер авто' (Statement s) = numberAuto(customer(s));
 seriesAutoCustomer 'Серия авто' (Statement s) = seriesAuto(customer(s));
 yearAutoCustomer 'Год авто' (Statement s) = yearAuto(customer(s));
-
 
 item 'Товар' = DATA Item (StatementDetail);
 nameItem 'Наименование товара' (StatementDetail d) = name(item(d));
 nameItemUnit 'Ед. изм.' (StatementDetail d) = nameUnit(item(d));
 
-quantity 'Количество' = DATA NUMERIC[16,4](StatementDetail);
-price 'Цена продажи' = DATA NUMERIC[17,2](StatementDetail);
+quantity 'Количество' = DATA NUMERIC[10,2](StatementDetail);
+price 'Цена продажи' = DATA NUMERIC[10,2](StatementDetail);
 sum 'Сумма продажи' (StatementDetail d) = quantity(d) * price(d);
 
-price(StatementDetail d) <- salePrice(item(d)) WHEN CHANGED(item(d));
+employee 'Работник' = DATA Employees (StatementDetailWork);
+nameWork 'Наименование работ' = DATA STRING[30](StatementDetailWork);
+priceWork 'Стоимость работ' = DATA NUMERIC[10,2](StatementDetailWork);
+nameEmployee 'Работу выполнил' (StatementDetailWork w) = name(employee(w));
+employeePosition 'Должность' (StatementDetailWork w) = position(employee(w));
+
+//price(StatementDetail d) <- salePrice(item(d)) WHEN CHANGED(item(d));  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 FORM statement 'Акт выполненных работ'
     OBJECTS s = Statement PANEL
-    PROPERTIES(s) numberCustomer, nameCustomer, brandAutoCustomer, seriesAutoCustomer, yearAutoCustomer, number_actCustomer, dateactCustomer
+    PROPERTIES(s) numberCustomer, nameCustomer, brandAutoCustomer, modelAutoCustomer, seriesAutoCustomer, yearAutoCustomer, number_actCustomer, dateactCustomer
 
+    OBJECTS w = StatementDetailWork
+    PROPERTIES(w) nameWork, priceWork, nameEmployee, employeePosition READONLY, NEW, DELETE GRID
+    FILTERS statementWork(w) = s  // указываем, что должны показываться только строки, относящиеся к данному заказу
+   
     OBJECTS d = StatementDetail
     PROPERTIES(d) nameItem, nameItemUnit, quantity, price, sum READONLY, NEW, DELETE GRID
-    FILTERS statement(d) = s
-
+    FILTERS statementDetail(d) = s
+    
     EDIT Statement OBJECT s
 ;
 
 FORM statements 'Реестр актов выполненных работ'
     OBJECTS s = Statement
-    PROPERTIES(s) READONLY number_actCustomer, dateactCustomer, nameCustomer, brandAutoCustomer, seriesAutoCustomer, yearAutoCustomer
+    PROPERTIES(s) READONLY number_actCustomer, dateactCustomer, nameCustomer, brandAutoCustomer, modelAutoCustomer, seriesAutoCustomer, yearAutoCustomer
     PROPERTIES(s) NEWSESSION NEW, EDIT, DELETE
 
+    OBJECTS w = StatementDetailWork
+    PROPERTIES(w) READONLY nameWork, priceWork, nameEmployee, employeePosition
+    FILTERS statementWork(w) = s
+   
     OBJECTS d = StatementDetail
     PROPERTIES(d) READONLY nameItem, nameItemUnit, quantity, price, sum
-    FILTERS statement(d) = s
+    FILTERS statementDetail(d) = s
 ;
 
 

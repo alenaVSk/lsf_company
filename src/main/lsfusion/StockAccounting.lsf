@@ -8,6 +8,7 @@ NAVIGATOR {
         NEW legalEntities;
         NEW auto;
         NEW customers;
+        NEW employees;
     }
     NEW FOLDER documents 'Документы' AFTER masterData WINDOW toolbar {
         NEW receipts;

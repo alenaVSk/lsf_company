@@ -15,19 +15,19 @@ name 'ФИО заказчика' = DATA STRING[80] (Customer) IN base NONULL;
 
 auto 'Авто' = DATA Auto (Customer);
 brandAuto 'Марка авто' (Customer c) = brand(auto(c));
-modelAuto 'Марка авто' (Customer c) = model(auto(c));
-
+modelAuto 'Модель авто' (Customer c) = model(auto(c));
 numberAuto 'Номер авто' = DATA STRING[5] (Customer) IN base NONULL;
 seriesAuto 'Серия авто' = DATA STRING[6] (Customer) IN base NONULL;
 yearAuto 'Год авто' = DATA YEAR (Customer) IN base NONULL;
 reason 'Причина обращения' = DATA STRING[100] (Customer) IN base NONULL;
-
 
 number_act 'Номер акта вып. работ' = DATA STRING[5] (Customer);
 
 FORM auto 'Авто'
     OBJECTS a = Auto
     PROPERTIES(a) brand, model, NEW, DELETE
+    
+    ORDERS brand(a)
 ;
 
 FORM customers 'Журнал заказов'
