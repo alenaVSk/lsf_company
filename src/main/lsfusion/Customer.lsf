@@ -9,19 +9,20 @@ model 'Модель авто' = DATA STRING[10] (Auto) IN base;
 
 CLASS Customer 'Журнал заказов';
 
-numberN 'Заказ N' = DATA STRING[5] (Customer) NONULL;
-date 'Дата обращения' = DATA DATE (Customer) NONULL;
+numberN 'Заказ N' = DATA INTEGER (Customer) IN base NONULL;
+date 'Дата обращения' = DATA DATE (Customer) IN base NONULL;
 name 'ФИО заказчика' = DATA STRING[80] (Customer) IN base NONULL;
 
 auto 'Авто' = DATA Auto (Customer);
 brandAuto 'Марка авто' (Customer c) = brand(auto(c));
 modelAuto 'Модель авто' (Customer c) = model(auto(c));
+
+vin 'VIN' = DATA INTEGER (Customer) IN base;
 numberAuto 'Номер авто' = DATA STRING[5] (Customer) IN base NONULL;
 seriesAuto 'Серия авто' = DATA STRING[6] (Customer) IN base NONULL;
 yearAuto 'Год авто' = DATA YEAR (Customer) IN base NONULL;
-reason 'Причина обращения' = DATA STRING[100] (Customer) IN base NONULL;
-
-number_act 'Номер акта вып. работ' = DATA STRING[5] (Customer);
+mileageAuto 'Пробег' = DATA INTEGER (Customer) IN base;
+reason 'Причина обращения' = DATA STRING[100] (Customer) NONULL;
 
 FORM auto 'Авто'
     OBJECTS a = Auto
@@ -29,8 +30,30 @@ FORM auto 'Авто'
     
     ORDERS brand(a)
 ;
+// Эта форма будет выводится, как справочник
+FORM listAuto 'Авто'
+    OBJECTS a = Auto
+    PROPERTIES (a) READONLY brand, model
+    
+    LIST Auto OBJECT a
+;
 
 FORM customers 'Журнал заказов'
     OBJECTS c = Customer
-    PROPERTIES(c) numberN, date, name, brandAuto, modelAuto, numberAuto, seriesAuto, yearAuto, reason, number_act, NEW, DELETE
+    PROPERTIES(c) numberN, date, name, brandAuto, modelAuto, vin, numberAuto, seriesAuto, yearAuto, mileageAuto, reason
+    PROPERTIES (c) NEWSESSION NEW, EDIT, DELETE
+;
+
+FORM editCustomers 'Журнал заказов'
+    OBJECTS c = Customer PANEL 
+    PROPERTIES(c) numberN, date, name, brandAuto, modelAuto, vin, numberAuto, seriesAuto, yearAuto, mileageAuto, reason
+    
+    EDIT Customer OBJECT c
+;
+
+FORM listCustomers 'Журнал заказов'
+    OBJECTS c = Customer
+    PROPERTIES (c) READONLY numberN, date, name, brandAuto, modelAuto, vin, numberAuto, seriesAuto, yearAuto, mileageAuto
+    
+    LIST Customer OBJECT c
 ;

@@ -1,34 +1,36 @@
 MODULE Statement;
 
-REQUIRE Item, LegalEntity, Customer, Employees;
+REQUIRE Item, LegalEntity, Customer, Employees, Authentication;
 
 CLASS Statement 'Акт выполненных работ';
 CLASS StatementDetail 'Использованные материалы';
 CLASS StatementDetailWork 'Выполненные работы';
 
 statementDetail 'Документ строки' = DATA Statement (StatementDetail) NONULL DELETE;
-index 'Номер строки' (StatementDetail d) =
+indexDetail 'Номер строки' (StatementDetail d) =
     PARTITION SUM 1 IF d IS StatementDetail
         ORDER d BY statementDetail(d);
 
 statementWork 'Документ строки' = DATA Statement (StatementDetailWork) NONULL DELETE;
-index 'Номер строки' (StatementDetailWork w) =
+indexWork 'Номер строки' (StatementDetailWork w) =
     PARTITION SUM 1 IF w IS StatementDetailWork
         ORDER w BY statementWork(w);
 
-number_actCustomer 'Номер акта вып. работ' = DATA STRING[5] (Statement);
-dateactCustomer 'Дата акта вып.работ' = DATA DATE (Statement);
+numberActCustomer 'Номер акта вып. работ' = DATA STRING[5] (Statement);
+dateactCustomer 'Дата акта вып.работ' = DATA DATE (Statement);     
 
 customer 'Заказчик' = DATA Customer (Statement);
-numberCustomer 'Заказ N' (Statement s) = numberN(customer(s));
-nameCustomer 'ФИО заказчика' (Statement s) = name(customer(s));
+numberCustomer 'Заказ N' (Statement s) = numberN(customer(s)) NONULL;
+nameCustomer 'ФИО заказчика' (Statement s) = name(customer(s)) NONULL;
 
 autoCustomer 'Авто' (Statement s) = auto(customer(s));
-brandAutoCustomer 'Марка авто' (Statement s) = brandAuto(customer(s));
-modelAutoCustomer 'Модель авто' (Statement s) = modelAuto(customer(s));
-numberAutoCustomer 'Номер авто' (Statement s) = numberAuto(customer(s));
-seriesAutoCustomer 'Серия авто' (Statement s) = seriesAuto(customer(s));
-yearAutoCustomer 'Год авто' (Statement s) = yearAuto(customer(s));
+brandAutoCustomer 'Марка авто' (Statement s) = brandAuto(customer(s)) NONULL;
+modelAutoCustomer 'Модель авто' (Statement s) = modelAuto(customer(s)) NONULL;
+vinCustomer 'VIN' (Statement s) = vin(customer(s));
+numberAutoCustomer 'Номер авто' (Statement s) = numberAuto(customer(s)) NONULL;
+seriesAutoCustomer 'Серия авто' (Statement s) = seriesAuto(customer(s)) NONULL;
+yearAutoCustomer 'Год авто' (Statement s) = yearAuto(customer(s)) NONULL;
+mileageAutoCustomer 'Пробег' (Statement s) = mileageAuto(customer(s));
 
 item 'Товар' = DATA Item (StatementDetail);
 nameItem 'Наименование товара' (StatementDetail d) = name(item(d));
@@ -37,42 +39,114 @@ nameItemUnit 'Ед. изм.' (StatementDetail d) = nameUnit(item(d));
 quantity 'Количество' = DATA NUMERIC[10,2](StatementDetail);
 price 'Цена продажи' = DATA NUMERIC[10,2](StatementDetail);
 sum 'Сумма продажи' (StatementDetail d) = quantity(d) * price(d);
+//автозаполнение цены продажи товара по Акту вып работ значением оптовой цены, заданной пользователем для товара
+price(StatementDetail d) <- salePrice(item(d)) WHEN CHANGED(item(d));
 
 employee 'Работник' = DATA Employees (StatementDetailWork);
 nameWork 'Наименование работ' = DATA STRING[30](StatementDetailWork);
-priceWork 'Стоимость работ' = DATA NUMERIC[10,2](StatementDetailWork);
 nameEmployee 'Работу выполнил' (StatementDetailWork w) = name(employee(w));
 employeePosition 'Должность' (StatementDetailWork w) = position(employee(w));
 
-//price(StatementDetail d) <- salePrice(item(d)) WHEN CHANGED(item(d));  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//в 'Кол-во н/ч' вводится 0,33 (время работы в мин / на 60), например: 20мин/60=0,33
+normoHour 'Кол-во н/ч' = DATA NUMERIC[10,2] (StatementDetailWork);
+priceWork 'Стоимость работ' (StatementDetailWork w) = NUMERIC[10,2] (normoHour(w) * 70); //70 это стоимость 1 нормо-часа в руб.
+
+//итоги по суммам: по материалам, по работе, итог
+totalSumItem 'Сумма/материалы' (Statement s) = GROUP SUM sum(StatementDetail sd) IF statementDetail(sd) = s;
+totalSumWork 'Стоимость работ' (Statement s) = GROUP SUM priceWork(StatementDetailWork sw) IF statementWork(sw) = s;
+totalSumAct 'Итоговая сумма' (Statement s) = totalSumItem(s) (+) totalSumWork (s);
+
+discount 'Скидка %' = DATA NUMERIC[10,2] (Statement);
+costDiscount 'Сумма со скидкой' (Statement s) = NUMERIC[10,2] (totalSumAct(s) (-) (totalSumAct(s) / 100 * discount(s)));
+
+userName 'Акт составил' = DATA STRING[50] (Statement);
+
+WHEN SET (Statement r IS Statement) AND NOT userName(r)
+    DO userName(r) <- STRING[50](currentUserName());
 
 FORM statement 'Акт выполненных работ'
     OBJECTS s = Statement PANEL
-    PROPERTIES(s) numberCustomer, nameCustomer, brandAutoCustomer, modelAutoCustomer, seriesAutoCustomer, yearAutoCustomer, number_actCustomer, dateactCustomer
+    PROPERTIES(s) numberActCustomer, dateactCustomer, nameCustomer, brandAutoCustomer, modelAutoCustomer, vinCustomer, numberAutoCustomer, 
+                seriesAutoCustomer, yearAutoCustomer, mileageAutoCustomer, totalSumItem, totalSumWork, totalSumAct, discount, costDiscount 
 
     OBJECTS w = StatementDetailWork
-    PROPERTIES(w) nameWork, priceWork, nameEmployee, employeePosition READONLY, NEW, DELETE GRID
+    PROPERTIES(w) indexWork, nameWork, nameEmployee, employeePosition, normoHour, priceWork  READONLY, NEW, DELETE GRID
     FILTERS statementWork(w) = s  // указываем, что должны показываться только строки, относящиеся к данному заказу
    
     OBJECTS d = StatementDetail
-    PROPERTIES(d) nameItem, nameItemUnit, quantity, price, sum READONLY, NEW, DELETE GRID
+    PROPERTIES(d) indexDetail, nameItem, nameItemUnit, quantity, price, sum READONLY, NEW, DELETE GRID
     FILTERS statementDetail(d) = s
     
     EDIT Statement OBJECT s
 ;
 
 FORM statements 'Реестр актов выполненных работ'
-    OBJECTS s = Statement
-    PROPERTIES(s) READONLY number_actCustomer, dateactCustomer, nameCustomer, brandAutoCustomer, modelAutoCustomer, seriesAutoCustomer, yearAutoCustomer
+    OBJECTS s = Statement 
+    PROPERTIES(s) READONLY numberActCustomer, dateactCustomer, nameCustomer, brandAutoCustomer, modelAutoCustomer, 
+                    vinCustomer, numberAutoCustomer, seriesAutoCustomer, yearAutoCustomer, mileageAutoCustomer, 
+                    totalSumItem, totalSumWork, totalSumAct, costDiscount, userName
     PROPERTIES(s) NEWSESSION NEW, EDIT, DELETE
+    ORDERS numberActCustomer(s)
 
     OBJECTS w = StatementDetailWork
-    PROPERTIES(w) READONLY nameWork, priceWork, nameEmployee, employeePosition
+    PROPERTIES(w) READONLY indexWork, nameWork, nameEmployee, employeePosition, normoHour, priceWork
     FILTERS statementWork(w) = s
    
     OBJECTS d = StatementDetail
-    PROPERTIES(d) READONLY nameItem, nameItemUnit, quantity, price, sum
+    PROPERTIES(d) READONLY indexDetail, nameItem, nameItemUnit, quantity, price, sum
     FILTERS statementDetail(d) = s
 ;
 
+DESIGN statement {
+    OBJECTS {
+        NEW cntAct FIRST {
+            horizontal = TRUE; 
+            caption = 'Номер';
+            height = 100;
+            MOVE PROPERTY (numberActCustomer(s));
+            MOVE PROPERTY (dateactCustomer(s));
+            
+        }
+        NEW cntCus AFTER cntAct {
+            horizontal = FALSE;
+            caption = 'Заказчик';
+            height = 100;
+            MOVE PROPERTY (nameCustomer(s));
+        }
+        NEW cntAut AFTER cntCus {
+            horizontal = TRUE;
+            caption = 'Авто';
+            height = 100;
+            MOVE PROPERTY (brandAutoCustomer(s));
+            MOVE PROPERTY (modelAutoCustomer(s));
+            MOVE PROPERTY (modelAutoCustomer(s));
+            MOVE PROPERTY (vinCustomer(s));
+            MOVE PROPERTY (yearAutoCustomer(s));
+            MOVE PROPERTY (mileageAutoCustomer(s));
+        }
+        NEW cntTotal AFTER cntAut {
+            horizontal = TRUE;
+            caption = 'Итого';
+            height = 100;
+            MOVE PROPERTY (totalSumItem(s)){ background = RGB(204, 204, 255); }
+            MOVE PROPERTY (totalSumWork(s)){ background = RGB(204, 204, 255); }
+            MOVE PROPERTY (totalSumAct(s)){ background = RGB(204, 204, 255); }
+            MOVE PROPERTY (discount(s)){ background = RGB(255, 204, 204); }
+            MOVE PROPERTY (costDiscount(s)){ background = RGB(255, 204, 204); }
+        }
+    }
+}
 
+//вертикальное расположение OBJECTS в форме 
+/*
+DESIGN statements {
+    OBJECTS {
+        NEW pane {
+            fill = 1;
+            horizontal = TRUE ;
+            MOVE BOX(w);
+            MOVE BOX(d);
+        }
+    }
+}
+*/

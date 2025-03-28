@@ -6,9 +6,31 @@ name 'Наименование' = DATA STRING[100](Item) IN base;
 barcode 'Штрихкод' = DATA BPSTRING[13](Item) IN base;
 nameUnit 'Ед. изм.' = DATA STRING[10](Item) IN base;
 
-salePrice 'Цена продажи' = DATA NUMERIC[17,2](Item) IN base;
+salePrice 'Цена продажи' = DATA NUMERIC[17,2](Item);
 
 FORM items 'Товары'
     OBJECTS i = Item
-    PROPERTIES(i) name, barcode, nameUnit, salePrice, NEW, DELETE
+    PROPERTIES(i) READONLY name, barcode, nameUnit, salePrice
+    PROPERTIES (i) NEWSESSION NEW, EDIT, DELETE
 ;
+
+
+
+/*
+FORM viewOrgaization 'Организации'
+OBJECTS o = Organization
+PROPERTIES (o) READONLY name
+PROPERTIES (o) NEWSESSION NEW, EDIT, DELETE
+;
+FORM editOrgaization 'Организация'
+OBJECTS o = Organization PANEL
+PROPERTIES (o) name
+EDIT Organization OBJECT o
+;
+// Эта форма будет выводится, как справочник
+FORM listOrgaization 'Организации'
+OBJECTS o = Organization
+PROPERTIES (o) READONLY name
+LIST Organization OBJECT o
+;
+*/

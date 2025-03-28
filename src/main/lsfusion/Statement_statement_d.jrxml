@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Statement.statement_d" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="5" bottomMargin="0" uuid="ea915dad-61ba-4df4-ae20-38ad0225d1d9">
+	<property name="net.sf.jasperreports.export.xls.print.page.width" value="842"/>
+	<property name="net.sf.jasperreports.export.xls.print.page.height" value="595"/>
+	<style name="DefaultStyle" isDefault="true" vTextAlign="Middle" fontName="lsf.TimesNewRoman" fontSize="10">
+		<box>
+			<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+		</box>
+		<paragraph leftIndent="2" rightIndent="2"/>
+	</style>
+	<style name="GroupCellStyle0" vTextAlign="Middle" fontName="lsf.TimesNewRoman" fontSize="10">
+		<box>
+			<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+		</box>
+		<paragraph leftIndent="2" rightIndent="2"/>
+	</style>
+	<field name="d.object" class="java.lang.Long"/>
+	<field name="indexDetail(d)" class="java.lang.Integer"/>
+	<field name="nameItem(d)" class="java.lang.String"/>
+	<field name="nameItemUnit(d)" class="java.lang.String"/>
+	<field name="quantity(d)" class="java.math.BigDecimal"/>
+	<field name="price(d)" class="java.math.BigDecimal"/>
+	<field name="sum(d)" class="java.math.BigDecimal"/>
+	<pageHeader>
+		<band height="18">
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement style="GroupCellStyle0" stretchType="RelativeToBandHeight" x="0" y="0" width="79" height="18" uuid="6a5a1034-b845-48a6-b15c-372893703782"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["Номер строки"]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement style="GroupCellStyle0" stretchType="RelativeToBandHeight" x="79" y="0" width="452" height="18" uuid="83555090-eb1a-43eb-80e9-bee4571efb7b"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["Наименование товара"]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement style="GroupCellStyle0" stretchType="RelativeToBandHeight" x="531" y="0" width="30" height="18" uuid="3c2b3804-0497-4a35-971f-50a3ffb99111"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["Ед. изм."]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement style="GroupCellStyle0" stretchType="RelativeToBandHeight" x="561" y="0" width="79" height="18" uuid="f9731a9a-3e03-4929-818f-f6d63eabbd2c"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["Количество"]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement style="GroupCellStyle0" stretchType="RelativeToBandHeight" x="640" y="0" width="79" height="18" uuid="85f7523f-a516-4aa1-b18c-1ddaa193f8ca"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["Цена продажи"]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement style="GroupCellStyle0" stretchType="RelativeToBandHeight" x="719" y="0" width="83" height="18" uuid="853e5397-bca3-4e8b-b72d-0af9ead869a5"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["Сумма продажи"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="18">
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement style="GroupCellStyle0" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="79" height="18" uuid="f955cb07-1f9c-4781-b0fb-1c5ba1a016e0"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{indexDetail(d)}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement style="GroupCellStyle0" positionType="Float" stretchType="RelativeToBandHeight" x="79" y="0" width="452" height="18" uuid="bd38e6fd-1317-47b0-97c2-46c50d9f04dd"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[$F{nameItem(d)}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement style="GroupCellStyle0" positionType="Float" stretchType="RelativeToBandHeight" x="531" y="0" width="30" height="18" uuid="bfd3f51c-5f80-4d87-9503-d42147b0eda3"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[$F{nameItemUnit(d)}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement style="GroupCellStyle0" positionType="Float" stretchType="RelativeToBandHeight" x="561" y="0" width="79" height="18" uuid="a56d4519-9cca-4a04-8e12-3e4a67f34d59"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{quantity(d)}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement style="GroupCellStyle0" positionType="Float" stretchType="RelativeToBandHeight" x="640" y="0" width="79" height="18" uuid="41c66df5-2f87-4cc8-9639-0e1936ab1db1"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{price(d)}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement style="GroupCellStyle0" positionType="Float" stretchType="RelativeToBandHeight" x="719" y="0" width="83" height="18" uuid="1d252754-5946-495b-9cd6-bc3b5f3e9a6a"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{sum(d)}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Statement.statement" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="6ad9e17a-ee31-4904-bf3b-42c8d33bd9d7">
+	<property name="net.sf.jasperreports.export.xls.print.page.width" value="842"/>
+	<property name="net.sf.jasperreports.export.xls.print.page.height" value="595"/>
+	<style name="DefaultStyle" isDefault="true" vTextAlign="Middle" fontName="lsf.TimesNewRoman" fontSize="10">
+		<box>
+			<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+		</box>
+		<paragraph leftIndent="2" rightIndent="2"/>
+	</style>
+	<style name="GroupCellStyle2" vTextAlign="Middle" fontName="lsf.TimesNewRoman" fontSize="10">
+		<box>
+			<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+		</box>
+		<paragraph leftIndent="2" rightIndent="2"/>
+	</style>
+	<style name="GroupCellStyle1" mode="Opaque" backcolor="#DFDFDF" vTextAlign="Middle" fontName="lsf.TimesNewRoman" fontSize="10">
+		<box>
+			<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+		</box>
+		<paragraph leftIndent="2" rightIndent="2"/>
+	</style>
+	<parameter name="w_report" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="w_source" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="w_params" class="java.util.Map"/>
+	<parameter name="d_report" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="d_source" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="d_params" class="java.util.Map"/>
+	<field name="s.object" class="java.lang.Long"/>
+	<field name="numberActCustomer(s)" class="java.lang.String"/>
+	<field name="dateactCustomer(s)" class="java.time.LocalDate"/>
+	<field name="nameCustomer(s)" class="java.lang.String"/>
+	<field name="brandAutoCustomer(s)" class="java.lang.String"/>
+	<field name="modelAutoCustomer(s)" class="java.lang.String"/>
+	<field name="seriesAutoCustomer(s)" class="java.lang.String"/>
+	<field name="yearAutoCustomer(s)" class="java.lang.Integer"/>
+	<field name="totalSumItem(s)" class="java.math.BigDecimal"/>
+	<field name="totalSumWork(s)" class="java.math.BigDecimal"/>
+	<field name="totalSumAct(s)" class="java.math.BigDecimal"/>
+	<group name="designGroup5897">
+		<groupExpression><![CDATA[String.valueOf($F{s.object})]]></groupExpression>
+		<groupHeader>
+			<band height="18" splitType="Prevent">
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" stretchType="RelativeToBandHeight" x="0" y="0" width="30" height="18" uuid="1d540efc-d37c-42e4-862d-7bb1afb9e6ed"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA["Номер акта вып. работ"]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" stretchType="RelativeToBandHeight" x="30" y="0" width="70" height="18" uuid="df083e64-8a65-4f7f-90bd-cb93737a2fda"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA["Дата акта вып.работ"]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" stretchType="RelativeToBandHeight" x="100" y="0" width="316" height="18" uuid="4c9da79b-b0ce-403c-9f4e-1016a0858bf6"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA["ФИО заказчика"]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" stretchType="RelativeToBandHeight" x="416" y="0" width="30" height="18" uuid="42e1b7af-e5c8-4e34-b9f8-630f6b345ec3"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA["Марка авто"]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" stretchType="RelativeToBandHeight" x="446" y="0" width="30" height="18" uuid="5c9740a8-6a80-4e9d-b9e6-5dc82a5f25ea"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA["Модель авто"]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" stretchType="RelativeToBandHeight" x="476" y="0" width="30" height="18" uuid="056e4096-8af0-4cf3-966b-5631ccc73cdd"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA["Серия авто"]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" stretchType="RelativeToBandHeight" x="506" y="0" width="74" height="18" uuid="a3369bfa-4f18-4964-894b-e7d104541df0"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA["Год авто"]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" stretchType="RelativeToBandHeight" x="580" y="0" width="74" height="18" uuid="8dc33e9a-698b-4c26-9182-27e517b99d8a"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA["Сумма/материалы"]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" stretchType="RelativeToBandHeight" x="654" y="0" width="74" height="18" uuid="c2dc92eb-1d0a-484e-8e05-0af595a5708e"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA["Сумма/работа"]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" stretchType="RelativeToBandHeight" x="728" y="0" width="74" height="18" uuid="5bd9d9c7-201f-47e4-b318-361fb7904e4c"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA["Итоговая сумма"]]></textFieldExpression>
+				</textField>
+			</band>
+			<band height="18" splitType="Prevent">
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="30" height="18" uuid="54117b0b-af90-4c66-a75d-ada02be51c0f"/>
+					<textElement textAlignment="Left"/>
+					<textFieldExpression><![CDATA[$F{numberActCustomer(s)}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="dd.MM.y" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" positionType="Float" stretchType="RelativeToBandHeight" x="30" y="0" width="70" height="18" uuid="e170747f-81c7-4b6d-b49b-3d22a9f73d41"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{dateactCustomer(s)}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" positionType="Float" stretchType="RelativeToBandHeight" x="100" y="0" width="316" height="18" uuid="d7a64522-9b58-4090-9753-e16e6bcc3a3c"/>
+					<textElement textAlignment="Left"/>
+					<textFieldExpression><![CDATA[$F{nameCustomer(s)}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" positionType="Float" stretchType="RelativeToBandHeight" x="416" y="0" width="30" height="18" uuid="224efb28-a65c-4a3f-9839-60be67dd867d"/>
+					<textElement textAlignment="Left"/>
+					<textFieldExpression><![CDATA[$F{brandAutoCustomer(s)}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" positionType="Float" stretchType="RelativeToBandHeight" x="446" y="0" width="30" height="18" uuid="4699ac50-6cb4-4e98-8656-db9c1951aec1"/>
+					<textElement textAlignment="Left"/>
+					<textFieldExpression><![CDATA[$F{modelAutoCustomer(s)}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" positionType="Float" stretchType="RelativeToBandHeight" x="476" y="0" width="30" height="18" uuid="29281336-895d-4333-9d62-d293b26f9d43"/>
+					<textElement textAlignment="Left"/>
+					<textFieldExpression><![CDATA[$F{seriesAutoCustomer(s)}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" positionType="Float" stretchType="RelativeToBandHeight" x="506" y="0" width="74" height="18" uuid="91303d0c-b0cd-41a4-89ed-e5a7c2b0fb9c"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{yearAutoCustomer(s)}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" positionType="Float" stretchType="RelativeToBandHeight" x="580" y="0" width="74" height="18" uuid="01503a1a-6532-4a91-bccf-5da7210a8c16"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{totalSumItem(s)}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" positionType="Float" stretchType="RelativeToBandHeight" x="654" y="0" width="74" height="18" uuid="1b7311c3-ba2d-4c41-aafd-be6497c5a16c"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{totalSumWork(s)}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" positionType="Float" stretchType="RelativeToBandHeight" x="728" y="0" width="74" height="18" uuid="ceab12b1-2dbf-49cd-852f-46ab715eede2"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{totalSumAct(s)}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<detail>
+		<band>
+			<subreport>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="0" height="0" uuid="21360888-871a-407e-aac2-0e5f030739f3"/>
+				<parametersMapExpression><![CDATA[$P{w_params}]]></parametersMapExpression>
+				<dataSourceExpression><![CDATA[$P{w_source}]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{w_report}]]></subreportExpression>
+			</subreport>
+		</band>
+		<band>
+			<subreport>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="0" height="0" uuid="eaa9697b-ab10-49e1-8c35-d41a504ab0d8"/>
+				<parametersMapExpression><![CDATA[$P{d_params}]]></parametersMapExpression>
+				<dataSourceExpression><![CDATA[$P{d_source}]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{d_report}]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>
