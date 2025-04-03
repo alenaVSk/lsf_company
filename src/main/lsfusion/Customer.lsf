@@ -1,7 +1,5 @@
 MODULE Customer;
 
-//REQUIRE Statement;
-
 CLASS Auto 'Авто';
 
 brand 'Марка авто' = DATA STRING[13] (Auto) IN base NONULL;
@@ -9,27 +7,39 @@ model 'Модель авто' = DATA STRING[10] (Auto) IN base;
 
 CLASS Customer 'Журнал заказов';
 
-numberN 'Заказ N' = DATA INTEGER (Customer) IN base NONULL;
+numberN 'Заказ N' (Customer c) =
+    PARTITION SUM 1 IF c IS Customer
+        ORDER c;
+
 date 'Дата обращения' = DATA DATE (Customer) IN base NONULL;
-name 'ФИО заказчика' = DATA STRING[80] (Customer) IN base NONULL;
+name 'ФИО заказчика' = DATA STRING[20] (Customer) IN base NONULL;
 
 auto 'Авто' = DATA Auto (Customer);
 brandAuto 'Марка авто' (Customer c) = brand(auto(c));
 modelAuto 'Модель авто' (Customer c) = model(auto(c));
 
-vin 'VIN' = DATA INTEGER (Customer) IN base;
-numberAuto 'Номер авто' = DATA STRING[5] (Customer) IN base NONULL;
-seriesAuto 'Серия авто' = DATA STRING[6] (Customer) IN base NONULL;
+vin 'VIN' = DATA STRING[17] (Customer) IN base;
+numberAuto 'Номер авто' = DATA STRING[5] (Customer) NONULL;
+seriesAuto 'Серия авто' = DATA STRING[5] (Customer) IN base NONULL;
 yearAuto 'Год авто' = DATA YEAR (Customer) IN base NONULL;
 mileageAuto 'Пробег' = DATA INTEGER (Customer) IN base;
 reason 'Причина обращения' = DATA STRING[100] (Customer) NONULL;
 
 FORM auto 'Авто'
     OBJECTS a = Auto
-    PROPERTIES(a) brand, model, NEW, DELETE
+    PROPERTIES(a) brand, model
+    PROPERTIES (a) NEWSESSION NEW, EDIT, DELETE
     
     ORDERS brand(a)
 ;
+
+FORM editAuto 'Авто'
+    OBJECTS a = Auto PANEL
+    PROPERTIES (a) brand, model
+
+    EDIT Auto OBJECT a
+;
+
 // Эта форма будет выводится, как справочник
 FORM listAuto 'Авто'
     OBJECTS a = Auto

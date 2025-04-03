@@ -12,5 +12,6 @@ FORM currentBalanceItemStock 'Текущие остатки'
     OBJECTS i = Item
     PROPERTIES READONLY name(i), barcode(i), nameUnit(i),  currentBalance(i)
     FILTERS currentBalance(i)
+    ORDERS name(i)
 ;
 

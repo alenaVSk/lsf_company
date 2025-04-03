@@ -61,13 +61,14 @@ costDiscount 'Сумма со скидкой' (Statement s) = NUMERIC[10,2] (tot
 
 userName 'Акт составил' = DATA STRING[50] (Statement);
 
-WHEN SET (Statement r IS Statement) AND NOT userName(r)
-    DO userName(r) <- STRING[50](currentUserName());
+WHEN SET (Statement s IS Statement) AND NOT userName(s)
+    DO userName(s) <- STRING[50](currentUserName());
 
 FORM statement 'Акт выполненных работ'
     OBJECTS s = Statement PANEL
-    PROPERTIES(s) numberActCustomer, dateactCustomer, nameCustomer, brandAutoCustomer, modelAutoCustomer, vinCustomer, numberAutoCustomer, 
-                seriesAutoCustomer, yearAutoCustomer, mileageAutoCustomer, totalSumItem, totalSumWork, totalSumAct, discount, costDiscount 
+    PROPERTIES(s) numberActCustomer, dateactCustomer, nameCustomer, brandAutoCustomer, modelAutoCustomer, vinCustomer, 
+                numberAutoCustomer, seriesAutoCustomer, yearAutoCustomer, mileageAutoCustomer, totalSumItem, totalSumWork, 
+                totalSumAct, discount, costDiscount 
 
     OBJECTS w = StatementDetailWork
     PROPERTIES(w) indexWork, nameWork, nameEmployee, employeePosition, normoHour, priceWork  READONLY, NEW, DELETE GRID
@@ -119,8 +120,9 @@ DESIGN statement {
             height = 100;
             MOVE PROPERTY (brandAutoCustomer(s));
             MOVE PROPERTY (modelAutoCustomer(s));
-            MOVE PROPERTY (modelAutoCustomer(s));
             MOVE PROPERTY (vinCustomer(s));
+            MOVE PROPERTY (numberAutoCustomer(s));
+            MOVE PROPERTY (seriesAutoCustomer(s));
             MOVE PROPERTY (yearAutoCustomer(s));
             MOVE PROPERTY (mileageAutoCustomer(s));
         }

@@ -25,7 +25,6 @@ quantity 'Количество' = DATA NUMERIC[16,4] (ReceiptDetail) NONULL;
 price 'Цена поставщика' = DATA NUMERIC[17,2] (ReceiptDetail) NONULL;
 sum 'Сумма поставщика' (ReceiptDetail d) = quantity(d) * price(d);
 
-// Вспомогательное свойство для суммы  
 totalSum 'Итоговая сумма' (Receipt r) = GROUP SUM sum(ReceiptDetail d) IF receipt(d) = r;
 
 FORM receipt 'Приходная накладная'

@@ -4,10 +4,19 @@ CLASS Employees 'Работники';
 
 name 'ФИО работника' = DATA STRING[50](Employees) IN base;
 position 'Должность' = DATA STRING[20](Employees) IN base;
+grade 'Разряд' = DATA STRING[10](Employees) IN base;
 
 FORM employees 'Работники'
     OBJECTS e = Employees
-    PROPERTIES(e) name, position, NEW, DELETE
+    PROPERTIES(e) READONLY name, position, grade
+    PROPERTIES (e) NEWSESSION NEW, EDIT, DELETE
+    ORDERS name(e)
 ;
 
+FORM employee 'Работник'
+    OBJECTS e = Employees PANEL
+    PROPERTIES (e) name, position, grade
+    
+    EDIT Employees OBJECT e
+;
 

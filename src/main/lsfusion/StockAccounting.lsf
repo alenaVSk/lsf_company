@@ -1,19 +1,21 @@
 MODULE StockAccounting;
 
-REQUIRE Item, LegalEntity, Statement, Receipt, StockItem, Customer;
+REQUIRE Item, LegalEntity, Statement, Receipt, StockItem, Customer, Employees;
 
 NAVIGATOR {
     NEW FOLDER masterData 'Справочники' FIRST WINDOW toolbar {
         NEW items;
         NEW legalEntities;
         NEW auto;
-        NEW customers;
         NEW employees;
     }
-    NEW FOLDER documents 'Документы' AFTER masterData WINDOW toolbar {
-        NEW receipts;
+    NEW FOLDER orders 'Заказы' AFTER masterData WINDOW toolbar {
+        NEW customers;
         NEW statements;
     }
-    NEW currentBalanceItemStock AFTER documents;
+    NEW FOLDER materials 'Материалы' AFTER orders WINDOW toolbar{
+        NEW receipts;
+        NEW currentBalanceItemStock;
+    }
 }
 

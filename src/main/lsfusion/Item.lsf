@@ -12,25 +12,12 @@ FORM items 'Товары'
     OBJECTS i = Item
     PROPERTIES(i) READONLY name, barcode, nameUnit, salePrice
     PROPERTIES (i) NEWSESSION NEW, EDIT, DELETE
+    ORDERS name(i)
 ;
 
-
-
-/*
-FORM viewOrgaization 'Организации'
-OBJECTS o = Organization
-PROPERTIES (o) READONLY name
-PROPERTIES (o) NEWSESSION NEW, EDIT, DELETE
+FORM item 'Товар'
+    OBJECTS i = Item PANEL
+    PROPERTIES(i) name, barcode, nameUnit, salePrice
+    
+    EDIT Item OBJECT i
 ;
-FORM editOrgaization 'Организация'
-OBJECTS o = Organization PANEL
-PROPERTIES (o) name
-EDIT Organization OBJECT o
-;
-// Эта форма будет выводится, как справочник
-FORM listOrgaization 'Организации'
-OBJECTS o = Organization
-PROPERTIES (o) READONLY name
-LIST Organization OBJECT o
-;
-*/
