@@ -58,7 +58,7 @@ WHEN SET (Receipt r IS Receipt) AND NOT userName(r)
 EXTEND FORM receipts
     PROPERTIES (r) READONLY userName, userDate
 ;
-// новое: определяем уникальность документа
+// определяем уникальность документа
 unique = GROUP AGGR Receipt r BY number(r), date(r);
 // 3. Ограничение на количество едениц товара
 CONSTRAINT quantity(ReceiptDetail d) > 500 OR quantity(d) <= 0 MESSAGE 'Недопустимое количество';

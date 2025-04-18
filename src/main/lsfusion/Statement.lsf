@@ -139,6 +139,14 @@ DESIGN statement {
     }
 }
 
+printAct 'Распечатать акт' (Statement s) {
+    PRINT statement OBJECTS s = s;
+}
+
+EXTEND FORM statements
+    PROPERTIES(s) printAct TOOLBAR
+;
+
 //вертикальное расположение OBJECTS в форме 
 /*
 DESIGN statements {
