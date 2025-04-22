@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Statement.printStatement" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="ffdac683-ee72-40b4-8156-00b6f8c47b63">
+	<property name="net.sf.jasperreports.export.xls.print.page.width" value="842"/>
+	<property name="net.sf.jasperreports.export.xls.print.page.height" value="595"/>
+	<style name="DefaultStyle" isDefault="true" fontName="lsf.TimesNewRoman" fontSize="10"/>
+	<style name="GroupCellStyle2" vTextAlign="Middle" fontName="lsf.TimesNewRoman" fontSize="10">
+		<box>
+			<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+		</box>
+		<paragraph leftIndent="2" rightIndent="2"/>
+	</style>
+	<style name="GroupCellStyle1" mode="Opaque" vTextAlign="Middle" fontName="lsf.TimesNewRoman" fontSize="10">
+		<box>
+			<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+		</box>
+		<paragraph leftIndent="2" rightIndent="2"/>
+	</style>
+	<style name="NoBorderStyle" fontName="lsf.TimesNewRoman" fontSize="10" isBold="false" isItalic="false" isUnderline="false"/>
+	<parameter name="w_report" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="w_source" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="w_params" class="java.util.Map"/>
+	<parameter name="d_report" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="d_source" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="d_params" class="java.util.Map"/>
+	<field name="s.object" class="java.lang.Long"/>
+	<field name="numberActCustomer(s)" class="java.lang.String"/>
+	<field name="dateactCustomer(s)" class="java.time.LocalDate"/>
+	<field name="nameCustomer(s)" class="java.lang.String"/>
+	<field name="brandAutoCustomer(s)" class="java.lang.String"/>
+	<field name="modelAutoCustomer(s)" class="java.lang.String"/>
+	<field name="vinCustomer(s)" class="java.lang.String"/>
+	<field name="numberAutoCustomer(s)" class="java.lang.String"/>
+	<field name="seriesAutoCustomer(s)" class="java.lang.String"/>
+	<field name="yearAutoCustomer(s)" class="java.lang.Integer"/>
+	<field name="mileageAutoCustomer(s)" class="java.lang.Integer"/>
+	<field name="totalSumItem(s)" class="java.math.BigDecimal"/>
+	<field name="totalSumWork(s)" class="java.math.BigDecimal"/>
+	<field name="totalSumAct(s)" class="java.math.BigDecimal"/>
+	<field name="discount(s)" class="java.math.BigDecimal"/>
+	<field name="costDiscount(s)" class="java.math.BigDecimal"/>
+	<group name="designGroup6469">
+		<groupExpression><![CDATA[String.valueOf($F{s.object})]]></groupExpression>
+		<groupHeader>
+			<band height="18" splitType="Prevent">
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" stretchType="RelativeToBandHeight" x="0" y="0" width="112" height="18" uuid="684534da-2faa-4cd4-b710-284923203107"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA["ФИО заказчика"]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" stretchType="RelativeToBandHeight" x="112" y="0" width="50" height="18" uuid="d9ac8c22-d311-472a-a423-709e66979d7f"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA["Марка авто"]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" stretchType="RelativeToBandHeight" x="162" y="0" width="50" height="18" uuid="9b824c1a-1409-461a-9796-29424be0627e"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA["Модель авто"]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" stretchType="RelativeToBandHeight" x="212" y="0" width="120" height="18" uuid="0a130a36-ee22-4cc4-8081-295f8b5fdb20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA["VIN"]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" stretchType="RelativeToBandHeight" x="332" y="0" width="40" height="18" uuid="aaad38b1-1117-4cce-9656-5c7721d8682a"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA["Номер авто"]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" stretchType="RelativeToBandHeight" x="372" y="0" width="40" height="18" uuid="0d1badf8-332c-452c-9127-e56a2f816ea3"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA["Серия авто"]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" stretchType="RelativeToBandHeight" x="412" y="0" width="40" height="18" uuid="2bf105e7-b198-4efd-8a41-7065e4e97a6c"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA["Год авто"]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" stretchType="RelativeToBandHeight" x="452" y="0" width="70" height="18" uuid="fee2cebc-7afb-4a02-be2e-b124b6f978df"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA["Пробег"]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" stretchType="RelativeToBandHeight" x="522" y="0" width="60" height="18" uuid="f435dc9d-5fc2-467d-a7a0-d10936982425"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA["Сумма/материалы"]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" stretchType="RelativeToBandHeight" x="582" y="0" width="60" height="18" uuid="bb9030ad-c1e4-4f84-b695-65bbd4ec5b42"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA["Стоимость работ"]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" stretchType="RelativeToBandHeight" x="642" y="0" width="60" height="18" uuid="579a09c1-669a-4587-80c9-2ad1e40b7516"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA["Итоговая сумма"]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" stretchType="RelativeToBandHeight" x="702" y="0" width="30" height="18" uuid="46aebaec-0f38-439f-a4b5-e99e7e54f2c9"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA["Скидка %"]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" stretchType="RelativeToBandHeight" x="732" y="0" width="70" height="18" uuid="d5b411bd-6d8e-4345-be46-2274c06d2350"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA["Сумма со скидкой"]]></textFieldExpression>
+				</textField>
+			</band>
+			<band height="18" splitType="Prevent">
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="112" height="18" uuid="521191bd-0261-46d9-a5c7-cac5a7f954f5"/>
+					<textElement textAlignment="Left"/>
+					<textFieldExpression><![CDATA[$F{nameCustomer(s)}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" positionType="Float" stretchType="RelativeToBandHeight" x="112" y="0" width="50" height="18" uuid="d9d589d5-e4bb-44f5-a3ba-8d5ba36a08ee"/>
+					<textElement textAlignment="Left"/>
+					<textFieldExpression><![CDATA[$F{brandAutoCustomer(s)}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" positionType="Float" stretchType="RelativeToBandHeight" x="162" y="0" width="50" height="18" uuid="b907b976-e719-47d5-800c-15b9bdf85ce6"/>
+					<textElement textAlignment="Left"/>
+					<textFieldExpression><![CDATA[$F{modelAutoCustomer(s)}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" positionType="Float" stretchType="RelativeToBandHeight" x="212" y="0" width="120" height="18" uuid="5ebb705f-998b-4e99-8837-6691177ffd01"/>
+					<textElement textAlignment="Left"/>
+					<textFieldExpression><![CDATA[$F{vinCustomer(s)}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" positionType="Float" stretchType="RelativeToBandHeight" x="332" y="0" width="40" height="18" uuid="3051e37d-81e4-4798-bf06-1c0b5d6a7b35"/>
+					<textElement textAlignment="Left"/>
+					<textFieldExpression><![CDATA[$F{numberAutoCustomer(s)}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" positionType="Float" stretchType="RelativeToBandHeight" x="372" y="0" width="40" height="18" uuid="257888dd-eb79-46fc-9ba1-943fce629688"/>
+					<textElement textAlignment="Left"/>
+					<textFieldExpression><![CDATA[$F{seriesAutoCustomer(s)}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" positionType="Float" stretchType="RelativeToBandHeight" x="412" y="0" width="40" height="18" uuid="3d349527-6219-4551-af0b-0786237724dc"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{yearAutoCustomer(s)}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" positionType="Float" stretchType="RelativeToBandHeight" x="452" y="0" width="70" height="18" uuid="a13e6fa6-de43-4170-ab58-9913f3cf57b3"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{mileageAutoCustomer(s)}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" positionType="Float" stretchType="RelativeToBandHeight" x="522" y="0" width="60" height="18" uuid="7354da8c-1490-4535-b4b3-3d536c2251be"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{totalSumItem(s)}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" positionType="Float" stretchType="RelativeToBandHeight" x="582" y="0" width="60" height="18" uuid="a7bdc788-04a9-4951-98b1-e396ebbc8302"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{totalSumWork(s)}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" positionType="Float" stretchType="RelativeToBandHeight" x="642" y="0" width="60" height="18" uuid="e18efef1-9fff-4d6a-b86b-48490db0d5b8"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{totalSumAct(s)}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" positionType="Float" stretchType="RelativeToBandHeight" x="702" y="0" width="30" height="18" uuid="8a7359e9-d66e-4a0e-ab1f-2f71a947f60d"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{discount(s)}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="GroupCellStyle1" positionType="Float" stretchType="RelativeToBandHeight" x="732" y="0" width="70" height="18" uuid="e95debe3-ac05-4278-aa6b-b283d6f67efd"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{costDiscount(s)}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<title>
+		<band height="60">
+			<textField>
+				<reportElement style="NoBorderStyle" x="0" y="0" width="800" height="20" uuid="123e4567-e89b-12d3-a456-426614174000" mode="Transparent"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Акт выполненных работ № " + $F{numberActCustomer(s)} + " от " +
+        							($F{dateactCustomer(s)} != null ? $F{dateactCustomer(s)}.toString().replaceAll("-", ".") : "")
+									]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="NoBorderStyle" x="0" y="25" width="800" height="16" uuid="e0d7f9b2-9f56-4d75-b1b4-1d2bbfd90234" mode="Transparent"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Исполнитель: ООО \"Драйв Авто\", адрес: г. Приморск, ул. Примерная, д. 1, тел: +375(29)11-22-33"]]></textFieldExpression>
+			</textField>
+
+		</band>
+	</title>
+	<detail>
+		<band height="10"/>
+		<band height="20">
+			<staticText>
+				<reportElement x="0" y="0" width="800" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Выполненные работы]]></text>
+			</staticText>
+		</band>
+		<band>
+			<subreport>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="0" height="0" uuid="b8982b48-4a2a-4e37-98dd-2c95201ca6b0"/>
+				<parametersMapExpression><![CDATA[$P{w_params}]]></parametersMapExpression>
+				<dataSourceExpression><![CDATA[$P{w_source}]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{w_report}]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="10"/>
+		<band height="20">
+				<staticText>
+					<reportElement x="0" y="0" width="800" height="20"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Запасные части, материалы и технические жидкости исполнителя]]></text>
+				</staticText>
+		</band>
+		<band>
+			<subreport>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="0" height="0" uuid="1089ae7b-ef7d-4e90-837f-d7c306ccdf02"/>
+				<parametersMapExpression><![CDATA[$P{d_params}]]></parametersMapExpression>
+				<dataSourceExpression><![CDATA[$P{d_source}]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{d_report}]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<summary>
+		<band height="150">
+			<textField >
+				<reportElement style="NoBorderStyle" x="0" y="30" width="800" height="120" uuid="f16e6cc4-1f3f-4b68-bfa0-7b10520720f6" mode="Transparent"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[
+                "Контроль полноты и качества работ и проверку технического состояния автомобиля произвел:\n" +
+                "Должность, фамилия и инициалы ________________________________(подпись)\n\n" +
+                "Автомобиль заказчику передал:\n" +
+                "Должность, фамилия и инициалы ________________________________(подпись)\n\n\n" +
+                "С объемом и стоимостью заказа согласен. Претензий по качеству работ, комплектности и внешнему виду не имею.\n" +
+                "Автомобиль получил:\n" +
+                "Заказчик (представитель) ________________________________(подпись)\n\n" +
+                "Замененные за плату дефектные компоненты автомобиля получил / отказался получить ________________________________(подпись)\n\n" +
+                "Гарантийные обязательства: ______________________________________________\n\n" +
+                "Рекомендации: ______________________________________________________________"
+            ]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

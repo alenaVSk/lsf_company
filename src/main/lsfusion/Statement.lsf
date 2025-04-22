@@ -38,7 +38,8 @@ nameItemUnit 'Ед. изм.' (StatementDetail d) = nameUnit(item(d));
 
 quantity 'Количество' = DATA NUMERIC[10,2](StatementDetail);
 price 'Цена продажи' = DATA NUMERIC[10,2](StatementDetail);
-sum 'Сумма продажи' (StatementDetail d) = quantity(d) * price(d);
+
+sum 'Сумма продажи' (StatementDetail d) = NUMERIC[10,2] (quantity(d) * price(d));
 //автозаполнение цены продажи товара по Акту вып работ значением оптовой цены, заданной пользователем для товара
 price(StatementDetail d) <- salePrice(item(d)) WHEN CHANGED(item(d));
 
@@ -52,9 +53,9 @@ normoHour 'Кол-во н/ч' = DATA NUMERIC[10,2] (StatementDetailWork);
 priceWork 'Стоимость работ' (StatementDetailWork w) = NUMERIC[10,2] (normoHour(w) * 70); //70 это стоимость 1 нормо-часа в руб.
 
 //итоги по суммам: по материалам, по работе, итог
-totalSumItem 'Сумма/материалы' (Statement s) = GROUP SUM sum(StatementDetail sd) IF statementDetail(sd) = s;
-totalSumWork 'Стоимость работ' (Statement s) = GROUP SUM priceWork(StatementDetailWork sw) IF statementWork(sw) = s;
-totalSumAct 'Итоговая сумма' (Statement s) = totalSumItem(s) (+) totalSumWork (s);
+totalSumItem 'Сумма/материалы' (Statement s)= NUMERIC[10,2] (GROUP SUM sum(StatementDetail sd) IF statementDetail(sd) = s);
+totalSumWork 'Стоимость работ' (Statement s) = NUMERIC[10,2] (GROUP SUM priceWork(StatementDetailWork sw) IF statementWork(sw) = s);
+totalSumAct 'Итоговая сумма' (Statement s) = NUMERIC[10,2] (totalSumItem(s) (+) totalSumWork (s));
 
 discount 'Скидка %' = DATA NUMERIC[10,2] (Statement);
 costDiscount 'Сумма со скидкой' (Statement s) = NUMERIC[10,2] (totalSumAct(s) (-) (totalSumAct(s) / 100 * discount(s)));
@@ -139,8 +140,23 @@ DESIGN statement {
     }
 }
 
+FORM printStatement 'Акт выполненных работ'
+    OBJECTS s = Statement PANEL
+    PROPERTIES(s) numberActCustomer, dateactCustomer, nameCustomer, brandAutoCustomer, modelAutoCustomer, vinCustomer,
+        numberAutoCustomer, seriesAutoCustomer, yearAutoCustomer, mileageAutoCustomer, totalSumItem, totalSumWork,
+        totalSumAct, discount, costDiscount
+
+    OBJECTS w = StatementDetailWork
+    PROPERTIES(w) indexWork, nameWork, nameEmployee, employeePosition, normoHour, priceWork  
+    FILTERS statementWork(w) = s  
+
+    OBJECTS d = StatementDetail
+    PROPERTIES(d) indexDetail, nameItem, nameItemUnit, quantity, price, sum 
+    FILTERS statementDetail(d) = s
+;
+
 printAct 'Распечатать акт' (Statement s) {
-    PRINT statement OBJECTS s = s;
+    PRINT printStatement OBJECTS s = s;
 }
 
 EXTEND FORM statements

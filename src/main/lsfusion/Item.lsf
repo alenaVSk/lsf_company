@@ -6,7 +6,7 @@ name 'Наименование' = DATA STRING[100](Item) IN base;
 barcode 'Штрихкод' = DATA BPSTRING[13](Item) IN base;
 nameUnit 'Ед. изм.' = DATA STRING[10](Item) IN base;
 
-salePrice 'Цена продажи' = DATA NUMERIC[17,2](Item);
+salePrice 'Цена продажи' = DATA NUMERIC[10,2](Item);
 
 FORM items 'Товары'
     OBJECTS i = Item
